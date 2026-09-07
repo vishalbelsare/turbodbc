@@ -3,6 +3,192 @@ Version history / changelog
 
 From version 2.0.0, turbodbc adapts semantic versioning.
 
+Version 5.3.0
+-------------
+
+* Support C++20 and ``pyarrow`` 24
+
+Version 5.2.0
+-------------
+
+* Support Python 3.11-3.14.
+* Allow ``pyarrow`` 18-23 and ``numpy`` 2+ in build tooling.
+
+Version 5.1.1, 5.1.2
+--------------------
+
+* Support ``pyarrow=19``
+
+Version 5.1.0
+-------------
+
+* Add python 3.13 support
+* Support ``pyarrow=18``
+
+Version 5.0.2
+-------------
+
+* Fix and clean up the PyArrow integration
+
+Version 5.0.0
+-------------
+
+* Switch to ``meson-python`` as the sole build system.
+* Support only ``pyarrow>=14`` and have a hard dependency on it and ``numpy``.
+* Switch to a single binary module.
+
+Version 4.14.0
+--------------
+
+* Support ``numpy=2``
+
+Version 4.13.0
+--------------
+
+* Support ``pyarrow=17``
+
+Version 4.12.1
+--------------
+
+* Remove usage of ``pkg_resources``
+
+Version 4.12.0
+--------------
+
+* Support ``pyarrow=16``
+* Drop Python 3.9
+
+Version 4.11.1
+--------------
+
+* Add upper pin for pyarrow in ``pyproject.toml``
+
+Version 4.11.0
+--------------
+
+* Support ``pyarrow=15``
+
+Version 4.10.0
+--------------
+
+* Fix performance bug in dealing with character columns under Windows, because of utf conversion by using `simdutf` instead of `wstring_convert`
+
+Version 4.9.0
+-------------
+
+* Fix pip wheel missing pyproject.toml - support pep517
+
+Version 4.8.0
+-------------
+
+* Support ``pyarrow=14``
+
+Version 4.7.0
+-------------
+
+* Support ``pyarrow=13``
+
+Version 4.6.0
+--------------
+
+* Drop python 3.8 support
+* Add python 3.11 support
+* Require ``numpy>=1.20.0``
+* Require ``pyarrow>=7``
+* Support ``pyarrow=12``
+* Bump pybind11 version to 2.10.4
+* Update GitHub Actions
+* Update pre-commit hooks and linting
+
+Version 4.5.10
+--------------
+
+* Support ``pyarrow=11``
+
+Version 4.5.9
+-------------
+
+* Check for ``_GLIBCXX_USE_CXX11_ABI`` setting of ``pyarrow``.
+
+Version 4.5.8
+-------------
+
+* Reupload of 4.5.7
+
+Version 4.5.7
+-------------
+
+* Ensure we can correctly load ``arrow_python.dll`` on Windows.
+* Various build system fixes as we now have macOS and Windows CI.
+* Set ``_LIBCPP_DISABLE_AVAILABILITY`` to allow building with C++17 on macOS.
+* Replace usage of ``boost::locale`` with their C++17 equivalents.
+
+Version 4.5.6
+-------------
+
+* add in support and test for cursor.nextset() when dealing with multiple result sets
+* modified the pyarrow logic in the setup.py to utilize the following helper
+  functions
+    * pyarrow.get_include()
+    * pyarrow.get_libraries()
+    * pyarrow.get_library_dirs()
+* Bump pyarrow support to <11
+    * Requires an additional pyarrow specific include directory
+* Update the Microsoft ODBC Driver 17 for SQL Server version
+* Bump c++11 to c++17 to enable pyarrow10 support
+* Remove static lib logic for FindArrow
+
+Version 4.5.5
+-------------
+
+* Update package requirements so that ``pyarrow>=1.0,<9.1`` can be used.
+
+Version 4.5.4
+-------------
+
+* Update package requirements so that ``pyarrow>=1.0,<8.1`` can be used.
+
+Version 4.5.3
+-------------
+
+* Bump version number to fix faulty release
+
+Version 4.5.2
+-------------
+
+* ``oldest-supported-numpy`` is only for ``pyproject.toml``, thus we removed it from
+  ``setup_requires`` again.
+
+Version 4.5.1
+-------------
+
+* Bump version number to fix faulty release
+
+Version 4.5.0
+-------------
+
+* Require ``pyarrow``, ``oldest-supported-numpy``, ``pybind11`` as ``setup_requires``
+* Create ``pyarrow`` symlinks if ``pyarrow`` is available
+
+Version 4.4.0
+-------------
+
+* Bump pybind11 version to 2.9.1
+* Bump dependency requirements to ``pyarrow>=1.0`` and ``numpy>=1.19``
+* Bump the used google test versions to 1.11.0
+
+Version 4.3.1
+-------------
+
+* Update package requirements so that ``pyarrow>0.17.1,<7.1`` can be used.
+
+Version 4.3.0
+-------------
+
+* Add Python 3.10 build 
+* Update package requirements so that ``pyarrow>0.17.1,<6.1`` can be used.
+* Bump pybind11 version to 2.8.1
+
 Version 4.2.1
 -------------
 

@@ -72,7 +72,7 @@ Run a specific test setup with an export of the build package:
 
 ::
 
-    earthly -P +test-python3.8-arrow3.x.x
+    earthly -P +test-python3.9-arrow7.x.x
 
 The coverage results as well as the build tar.gz for turbodbc can be found in the created `result` directory.
 To run other specific test targets and arguments, like different python or pyarrow versions, please see the Earthfile.
@@ -173,8 +173,8 @@ do the following:
 
     ::
 
-        wget -q https://github.com/pybind/pybind11/archive/v2.6.2.tar.gz
-        tar xvf v2.6.2.tar.gz
+        wget -q https://github.com/pybind/pybind11/archive/v2.9.1.tar.gz
+        tar xvf v2.9.1.tar.gz
 
 #.  Create a build directory somewhere and ``cd`` into it.
 

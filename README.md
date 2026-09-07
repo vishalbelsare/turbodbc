@@ -11,7 +11,7 @@ Turbodbc - Turbocharged database access for data scientists.
 
 Turbodbc is a Python module to access relational databases via the
 [Open Database Connectivity (ODBC)](https://en.wikipedia.org/wiki/Open_Database_Connectivity)
-interface. Its primary target audience are data scientist
+interface. Its primary target audience are data scientists
 that use databases for which no efficient native Python drivers are available.
 
 For maximum compatibility, turbodbc complies with the
@@ -23,7 +23,7 @@ other popular ODBC modules do.
 
 Turbodbc is free to use ([MIT license](https://github.com/blue-yonder/turbodbc/blob/master/LICENSE)),
 open source ([GitHub](https://github.com/blue-yonder/turbodbc)),
-works with Python 3.7+, and is available for Linux, macOS, and Windows.
+works with Python 3.9+, and is available for Linux, macOS, and Windows.
 
 Turbodbc is routinely tested with [MySQL](https://www.mysql.com),
 [PostgreSQL](https://www.postgresql.org), [EXASOL](http://www.exasol.com),

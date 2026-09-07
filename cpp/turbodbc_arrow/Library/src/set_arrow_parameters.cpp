@@ -12,8 +12,9 @@
 #include <sql.h>
 
 #include <ciso646>
+#include <codecvt>
 
-#include <boost/locale.hpp>
+#include <simdutf.h>
 
 using arrow::BooleanArray;
 using arrow::BinaryArray;
@@ -98,7 +99,7 @@ namespace {
       void rebind_to_maximum_length(BinaryArray const & array, std::size_t start, std::size_t elements)
       {
           int32_t maximum_length = 0;
-          for (int64_t i = 0; i != elements; ++i) {
+          for (std::size_t i = 0; i != elements; ++i) {
             if (!array.IsNull(start + i)) {
               maximum_length = std::max(maximum_length, array.value_length(start + i));
             }
@@ -118,7 +119,7 @@ namespace {
           auto & buffer = get_buffer();
           auto const character_size = sizeof(typename String::value_type);
 
-          for (int64_t i = 0; i != elements; ++i) {
+          for (std::size_t i = 0; i != elements; ++i) {
             auto element = buffer[i];
             if (typed_array.IsNull(start + i)) {
               element.indicator = SQL_NULL_DATA;
@@ -137,9 +138,14 @@ namespace {
         auto const& typed_array = static_cast<const BinaryArray&>(*data->chunk(0));
         std::vector<std::pair<bool, std::u16string>> batch;
         size_t maximum_length = 0;
-        for (int64_t i = 0; i != elements; ++i) {
+        for (std::size_t i = 0; i != elements; ++i) {
           if (!typed_array.IsNull(start + i)) {
-            std::u16string str = boost::locale::conv::utf_to_utf<char16_t>(typed_array.GetString(start + i));
+            std::string utf8_encoded = typed_array.GetString(start + i);
+            size_t expected_utf16_chars = simdutf::utf16_length_from_utf8(utf8_encoded.data(), utf8_encoded.size());
+            std::unique_ptr<char16_t[]> utf16{new char16_t[expected_utf16_chars]};
+            size_t utf16_chars = simdutf::convert_utf8_to_utf16le(utf8_encoded.data(), utf8_encoded.size(), utf16.get());
+            std::u16string str(utf16.get(), utf16_chars);
+
             maximum_length = std::max(maximum_length, str.length());
             batch.push_back({false, str});
           } else {
@@ -423,11 +429,12 @@ namespace {
 }
 
 std::shared_ptr<Table> unwrap_pyarrow_table(pybind11::object const & pyarrow_table) {
-    std::shared_ptr<Table> table;
-    if (not arrow::py::unwrap_table(pyarrow_table.ptr(), &table).ok()) {
-      throw turbodbc::interface_error("Could not unwrap the C++ object from Python pyarrow.Table");
+    arrow::Result<std::shared_ptr<Table>> result = arrow::py::unwrap_table(pyarrow_table.ptr());
+    if (result.ok()) {
+        std::shared_ptr<Table> table = result.ValueOrDie();
+        return table;
     }
-    return table;
+    throw turbodbc::interface_error("Could not unwrap the C++ object from Python pyarrow.Table");    
 }
 
 void assert_table_columns_match_parameters(turbodbc::bound_parameter_set & parameters, Table const& table) {
